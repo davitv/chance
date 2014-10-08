@@ -469,7 +469,11 @@ class TestEmailFunction(unittest.TestCase):
         self.assertRaises(chance_exceptions.WrongArgumentValue, chance.email, -1)
         self.assertRaises(chance_exceptions.WrongArgumentValue, chance.email, .1)
 
-
+class TestIpFunction(unittest.TestCase):
+    def test_ip_returns_correct_values(self):
+        ip_pattern = re.compile('^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$')
+        for x in xrange(20):
+            self.assertTrue(ip_pattern.match(chance.ip()) != None)
   
 if __name__ == '__main__':
     unittest.main()

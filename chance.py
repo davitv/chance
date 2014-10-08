@@ -239,3 +239,8 @@ def email(dom=''):
         dom = domain()
 
     return word() + '@' + dom
+
+
+def ip():
+    tup = (str(random.randint(0, 255)) for x in xrange(4))
+    return '.'.join(tup)

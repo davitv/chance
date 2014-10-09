@@ -3,6 +3,8 @@ import chance
 import chance_exceptions
 import datetime
 import re
+import dictionaries
+
 
 class TestChanceBooleanFunction(unittest.TestCase):
 
@@ -64,11 +66,6 @@ class TestChanceBooleanFunction(unittest.TestCase):
 
 class TestChanceCharacterFunction(unittest.TestCase):
     
-    def test_character_raise_exception(self):
-        self.assertRaises(chance_exceptions.WrongArgumentValue, chance.character, 10)
-        self.assertRaises(chance_exceptions.WrongArgumentValue, chance.character, -1)
-        self.assertRaises(chance_exceptions.WrongArgumentValue, chance.character, -.25)
-
     def test_character_returns_character(self):
         chars = 'abcdefghijklmnopqrstuvwxyz!@#$%^&*()[]'
         chars += chars.upper()
@@ -98,7 +95,7 @@ class TestChanceCharacterFunction(unittest.TestCase):
             ch = chance.character(symbols=False)
             self.assertTrue(chars.find(ch) >= 0)
 
-    def test_character_returns_nly_symbols(self):
+    def test_character_returns_only_symbols(self):
         chars = '!@#$%^&*()[]'
         for x in xrange(100):
             ch = chance.character(symbols=True, alpha=False)
@@ -176,15 +173,15 @@ class TestChanceCharacterFunction(unittest.TestCase):
             self.assertTrue(chars.find(ch) >= 0)
 
 
+    def test_character_raise_exception(self):
+        self.assertRaises(chance_exceptions.WrongArgumentValue, chance.character, 10)
+        self.assertRaises(chance_exceptions.WrongArgumentValue, chance.character, -1)
+        self.assertRaises(chance_exceptions.WrongArgumentValue, chance.character, -.25)
+        self.assertRaises(chance_exceptions.DictionaryException, chance.character,  **{'language':'bbdasasdg'})
+        self.assertRaises(chance_exceptions.DictionaryException, chance.character,  **{'language':'ff'})
+
 
 class TestStringFunction(unittest.TestCase):
-    
-    def test_string_raises_exception(self):
-        self.assertRaises(chance_exceptions.WrongArgumentValue, chance.string, -1)
-        self.assertRaises(chance_exceptions.WrongArgumentValue, chance.string, -.1)
-        self.assertRaises(chance_exceptions.WrongArgumentValue, chance.string, 0)
-        self.assertRaises(chance_exceptions.WrongArgumentValue, chance.string, 1)
-        self.assertRaises(chance_exceptions.WrongArgumentValue, chance.string, .1)
     
     def test_string_returns_string(self):
         for x in range(100):
@@ -211,6 +208,14 @@ class TestStringFunction(unittest.TestCase):
             for x in s:
                 self.assertTrue(pool.find(x) != -1)
 
+    def test_string_raises_exception(self):
+        self.assertRaises(chance_exceptions.WrongArgumentValue, chance.string, -1)
+        self.assertRaises(chance_exceptions.WrongArgumentValue, chance.string, -.1)
+        self.assertRaises(chance_exceptions.WrongArgumentValue, chance.string, 0)
+        self.assertRaises(chance_exceptions.WrongArgumentValue, chance.string, 1)
+        self.assertRaises(chance_exceptions.WrongArgumentValue, chance.string, .1)
+        self.assertRaises(chance_exceptions.DictionaryException, chance.string, **{'language':'dfsdf'})
+    
 
 class TestSyllableFunction(unittest.TestCase):
     def test_syllable_returns_correct_string(self):
@@ -218,8 +223,8 @@ class TestSyllableFunction(unittest.TestCase):
         for x in xrange(20):
             syll = chance.syllable(x+1)
             n = syll[0]
-            nxt = chance.VOWELS if chance.CONSONANTS.find(n) != -1 else chance.VOWELS
-            prv = chance.VOWELS if chance.VOWELS.find(n) != -1 else chance.CONSONANTS 
+            nxt = dictionaries.vowels['en'] if dictionaries.consonants['en'].find(n) != -1 else dictionaries.vowels['en']
+            prv = dictionaries.vowels['en'] if dictionaries.vowels['en'].find(n) != -1 else dictionaries.consonants['en'] 
             for i, ch in enumerate(syll):
                 if i == 0 or i == (len(syll)-1):
                     continue
@@ -231,9 +236,9 @@ class TestSyllableFunction(unittest.TestCase):
         for x in xrange(20):
             syll = chance.syllable(x+1, vowel_first=True)
             n = syll[0]
-            self.assertFalse(chance.VOWELS.find(n) == -1)
-            nxt = chance.CONSONANTS
-            prv = chance.VOWELS 
+            self.assertFalse(dictionaries.vowels['en'].find(n) == -1)
+            nxt = dictionaries.consonants['en']
+            prv = dictionaries.vowels['en'] 
             for i, ch in enumerate(syll):
                 if i == 0 or i == (len(syll)-1):
                     continue
@@ -243,9 +248,9 @@ class TestSyllableFunction(unittest.TestCase):
         for x in xrange(20):
             syll = chance.syllable(x+1, vowel_first=False)
             n = syll[0]
-            self.assertFalse(chance.CONSONANTS.find(n) == -1)
-            nxt = chance.VOWELS
-            prv = chance.CONSONANTS
+            self.assertFalse(dictionaries.consonants['en'].find(n) == -1)
+            nxt = dictionaries.vowels['en']
+            prv = dictionaries.consonants['en']
             for i, ch in enumerate(syll):
                 if i == 0 or i == (len(syll)-1):
                     continue
@@ -257,6 +262,7 @@ class TestSyllableFunction(unittest.TestCase):
            self.assertRaises(chance_exceptions.WrongArgumentValue, chance.syllable, dict())
            self.assertRaises(chance_exceptions.WrongArgumentValue, chance.syllable, -1)
            self.assertRaises(chance_exceptions.WrongArgumentValue, chance.syllable, 1.5)
+           self.assertRaises(chance_exceptions.DictionaryException, chance.syllable, **{'language':'dasdas'})
 
 
 class TestWordFunction(unittest.TestCase):
@@ -272,6 +278,7 @@ class TestWordFunction(unittest.TestCase):
         self.assertRaises(chance_exceptions.WrongArgumentValue, chance.word, dict())
         self.assertRaises(chance_exceptions.WrongArgumentValue, chance.word, -1)
         self.assertRaises(chance_exceptions.WrongArgumentValue, chance.word, 1.5)
+        self.assertRaises(chance_exceptions.DictionaryException, chance.word, **{'language':'dasdas'})
 
 class TestSentenceFunction(unittest.TestCase):
     
@@ -297,6 +304,7 @@ class TestSentenceFunction(unittest.TestCase):
         self.assertRaises(chance_exceptions.WrongArgumentValue, chance.sentence, 1.5)
         self.assertRaises(chance_exceptions.WrongArgumentValue, chance.sentence, 5, 12)
         self.assertRaises(chance_exceptions.WrongArgumentValue, chance.sentence, 9, 18)
+        self.assertRaises(chance_exceptions.DictionaryException, chance.sentence, **{'language':'dasdas'})
 
 
 class TestParagraphFunction(unittest.TestCase):
@@ -326,10 +334,7 @@ class TestAgeFunction(unittest.TestCase):
 
     def test_age_raises_exception(self):
         self.assertRaises(chance_exceptions.WrongArgumentValue, chance.age, 'i\'m')
-        self.assertRaises(chance_exceptions.WrongArgumentValue, chance.age, 'sitting')
-        self.assertRaises(chance_exceptions.WrongArgumentValue, chance.age, 'in')
-        self.assertRaises(chance_exceptions.WrongArgumentValue, chance.age, 'my')
-        self.assertRaises(chance_exceptions.WrongArgumentValue, chance.age, 'room')
+
 
 
 class TestDateFunction(unittest.TestCase):
@@ -489,6 +494,9 @@ class TestIpFunction(unittest.TestCase):
         ip_pattern = re.compile('^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$')
         for x in xrange(20):
             self.assertTrue(ip_pattern.match(chance.ip()) != None)
-  
+
+
+
+
 if __name__ == '__main__':
     unittest.main()

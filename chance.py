@@ -1,32 +1,31 @@
 import random
-import chance_exceptions
+from chance_exceptions import DictionaryException, WrongArgumentValue
 import datetime
 import dictionaries
 
 
-NUMBERS = '0123456789';
-CHARS_LOWER = 'abcdefghijklmnopqrstuvwxyz'
-SYMBOLS = "!@#$%^&*()[]"
-HEX_POOL = NUMBERS + 'abcdef'
-MAX_INT = 9007199254740992
-MIN_INT = -MAX_INT
-CONSONANTS = 'bcdfghjklmnprstvwz'
-VOWELS = 'aeiou'
+
 
 
 def boolean(likelihood=50):
     if likelihood < 0 or likelihood > 100:
-        raise chance_exceptions.WrongArgumentValue(
+        raise WrongArgumentValue(
             "likelihood argument value provided for chance.boolean(likelihood) accepts numbers from 0 to 100."
             )
     return random.random()  * 100 < likelihood
 
 
-def character(pool='', alpha=True, symbols=True, numbers=False, case='any'):
+def character(pool='', alpha=True, symbols=True, numbers=False, case='any', language='en'):
 
     if not isinstance(pool, (str)):
-        raise chance_exceptions.WrongArgumentValue("Pool argument must be string instance")
+        raise WrongArgumentValue("Pool argument must be string instance")
     
+    if not language in dictionaries.chars_lower:
+        raise DictionaryException("chars_lower pool for language " + language + " not"
+                                  " in dictionaries.py")
+
+            
+    CHARS_LOWER = dictionaries.chars_lower[language]
     if not pool:
         if alpha:
             pool += CHARS_LOWER
@@ -37,38 +36,46 @@ def character(pool='', alpha=True, symbols=True, numbers=False, case='any'):
             pool += pool.upper()
 
         if symbols:
-            pool += SYMBOLS
+            pool += dictionaries.symbols
 
         if numbers:
-            pool += NUMBERS
+            pool += dictionaries.numbers
         
     return pool[random.randint(0, len(pool) - 1)]
 
 
-def string(pool='', length=0, minimum=5, maximum=20):
+def string(pool='', length=0, minimum=5, maximum=20, language='en'):
 
     if not isinstance(pool, (str)):
-        raise chance_exceptions.WrongArgumentValue("pool argument must be string instance")
+        raise WrongArgumentValue("pool argument must be string instance")
 
     length = length or random.randint(minimum, maximum)
     result = ''
     for x in range(0, length):
-        result += character(pool=pool)
+        result += character(pool=pool, language=language)
 
     return result
 
 
-def syllable(length=0, minimum=2, maximum=3, vowel_first=False):
+def syllable(length=0, minimum=2, maximum=3, vowel_first=False, language='en'):
     
     if not isinstance(length, (int)) or length < 0:
-        raise chance_exceptions.WrongArgumentValue("length argument must be a positive integer")
+        raise WrongArgumentValue("length argument must be a positive integer")
 
     length = length or random.randint(minimum, maximum)
 
+    if not language in dictionaries.consonants:
+        raise DictionaryException("consonants pool for language " + language + " not found"
+                                  " in dictionaries.py")
+    
+    if not language in dictionaries.vowels:
+        raise DictionaryException("vowels pool for language " + language + " not found"
+                                  " in dictionaries.py")
+            
     if vowel_first:
-        first, second = VOWELS, CONSONANTS
+        first, second = dictionaries.vowels[language], dictionaries.consonants[language]
     else:
-        first, second = CONSONANTS, VOWELS
+        first, second = dictionaries.consonants[language], dictionaries.vowels[language]
 
     result = ''
 
@@ -78,25 +85,25 @@ def syllable(length=0, minimum=2, maximum=3, vowel_first=False):
     return result
 
 
-def word(syllables=0):
+def word(syllables=0, language='en'):
     
     if not isinstance(syllables, (int)) or syllables < 0:
-        raise chance_exceptions.WrongArgumentValue("syllables argument must be a positive integer")
+        raise WrongArgumentValue("syllables argument must be a positive integer")
     
     syllables = syllables or random.randint(2,3)
 
     result = ''
     for x in xrange(syllables):
-        result += syllable()
+        result += syllable(language=language)
     return result
 
-def sentence(words=0, ended_by=''):
+def sentence(words=0, ended_by='', language='en'):
 
     if not isinstance(words, (int)) or words < 0:
-        raise chance_exceptions.WrongArgumentValue("words argument must be a positive integer")
+        raise WrongArgumentValue("words argument must be a positive integer")
     
     if not isinstance(ended_by, (str)) or words < 0:
-        raise chance_exceptions.WrongArgumentValue("ended_by argument must be a string")
+        raise WrongArgumentValue("ended_by argument must be a string")
     
     if not ended_by:
         ended_by = '.'
@@ -105,21 +112,21 @@ def sentence(words=0, ended_by=''):
     length = words or random.randint(12, 18)
     result = []
     for x in xrange(length):
-        result.append(word())
+        result.append(word(language=language))
 
     return ' '.join(result).capitalize() + ended_by
 
 
-def paragraph(sentences=0):
+def paragraph(sentences=0, language='en'):
 
     if not isinstance(sentences, (int)) or sentences < 0:
-        raise chance_exceptions.WrongArgumentValue("sentences argument must be a positive integer")
+        raise WrongArgumentValue("sentences argument must be a positive integer")
     
     last_char_pool = '.'*4+'?!'
     length = sentences or random.randint(3, 7)
     result = []
     for x in xrange(length):
-        result.append(sentence(ended_by=last_char_pool))
+        result.append(sentence(ended_by=last_char_pool, language=language))
     
     return ' '.join(result)
 
@@ -134,7 +141,7 @@ def age(period='age'):
     }
 
     if not period in periods:
-        raise chance_exceptions.WrongArgumentValue("period should be one of this: " + ', '.join(periods.keys()))
+        raise WrongArgumentValue("period should be one of this: " + ', '.join(periods.keys()))
 
     return random.randint(periods[period][0], periods[period][1])
 
@@ -168,12 +175,12 @@ def first(gender='', language='en'):
     if not gender:
         gender = 'f' if boolean() else 'm'
     elif gender[0] != 'f' and gender[0] != 'm':
-        raise chance_exceptions.WrongArgumentValue("gender should be one of this: m (male), f (female)")
+        raise WrongArgumentValue("gender should be one of this: m (male), f (female)")
     else:
         gender = gender[0]
 
     if not language in dictionaries.first_names:
-        raise chance_exceptions.WrongArgumentValue(language + " dictionary for first name not found in dictionaries module")
+        raise WrongArgumentValue(language + " dictionary for first name not found in dictionaries module")
     cur_dict = dictionaries.first_names[language][gender]
     name = cur_dict[random.randint(0, len(cur_dict)-1)]
     return name
@@ -184,12 +191,12 @@ def last(gender='', language='en'):
     if not gender:
         gender = 'f' if boolean() else 'm'
     elif gender[0] != 'f' and gender[0] != 'm':
-        raise chance_exceptions.WrongArgumentValue("gender should be one of this: m (male), f (female)")
+        raise WrongArgumentValue("gender should be one of this: m (male), f (female)")
     else:
         gender = gender[0]
 
     if not language in dictionaries.last_names:
-        raise chance_exceptions.WrongArgumentValue(language + " dictionary for first name not found in dictionaries module")
+        raise WrongArgumentValue(language + " dictionary for first name not found in dictionaries module")
     cur_dict = dictionaries.last_names[language][gender]
     name = cur_dict[random.randint(0, len(cur_dict)-1)]
     return name
@@ -202,7 +209,7 @@ def name(gender='', language='en'):
 
 
 def hex_hash(length=20):
-    return string(length=length, pool=HEX_POOL)
+    return string(length=length, pool=dictionaries.hex_pool)
 
 
 def color(form='hex', grayscale=False):
@@ -217,13 +224,13 @@ def color(form='hex', grayscale=False):
         a, b, c = random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)
         return 'rgb(' + gray(a, ', ') + ')' if grayscale else 'rgb(' + str(a) + ', ' + str(b) + ', ' + str(c) + ')'
 
-    raise chance_exceptions.WrongArgumentValue('invalid format provided. Please provide one of "hex" or "rgb"')
+    raise WrongArgumentValue('invalid format provided. Please provide one of "hex" or "rgb"')
 
 
 def domain(tld=''):
 
     if not isinstance(tld, (str)):
-        raise chance_exceptions.WrongArgumentValue("tld argument must be a string")
+        raise WrongArgumentValue("tld argument must be a string")
     
     tlds = ('com', 'org', 'edu', 'gov', 'co.uk', 'net', 'io',)
     if not tld:
@@ -234,7 +241,7 @@ def domain(tld=''):
 def email(dom=''):
 
     if not isinstance(dom, (str)):
-        raise chance_exceptions.WrongArgumentValue("dom (domain) argument must be a string")
+        raise WrongArgumentValue("dom (domain) argument must be a string")
     
     if not dom:
         dom = domain()

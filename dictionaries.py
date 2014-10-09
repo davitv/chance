@@ -1,6 +1,28 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+numbers = '0123456789'
+symbols = "!@#$%^&*()[]"
+
+chars_lower = dict()
+chars_lower['en'] = 'abcdefghijklmnopqrstuvwxyz'
+chars_lower['ru'] = u'абвгдеёжзийклмнопрстуфьцчшщъыьэюя'
+
+consonants = dict()
+consonants['en'] = 'bcdfghjklmnprstvwz'
+consonants['ru'] = u'бвгджзклмнпрстфцчшщя'
+
+vowels = dict()
+vowels['en'] = 'aeiou'
+vowels['ru'] = u'аеёиоуыэюя'
+
+
+
+
+hex_pool = numbers + 'abcdef'
+max_int = 9007199254740992
+min_int = -max_int
+
 
 
 # First names =====================================
@@ -34,3 +56,178 @@ last_names['ru'] = {
 
 
 # End Last names =====================================
+
+
+# Streets =====================================
+
+streets_suffixes = dict()
+
+
+streets_suffixes['en'] = [
+   
+            { 
+                'name': 'Avenue', 
+                'abbreviation': 'Ave'
+            },
+            { 
+                'name': 'Boulevard', 
+                'abbreviation': 'Blvd'
+            },
+            { 
+                'name': 'Center', 
+                'abbreviation': 'Ctr'
+            },
+            { 
+                'name': 'Circle', 
+                'abbreviation': 'Cir'
+            },
+            { 
+                'name': 'Court', 
+                'abbreviation': 'Ct'
+            },
+            { 
+                'name': 'Drive', 
+                'abbreviation': 'Dr'
+            },
+            { 
+                'name': 'Extension', 
+                'abbreviation': 'Ext'
+            },
+            { 
+                'name': 'Glen', 
+                'abbreviation': 'Gln'
+            },
+            { 
+                'name': 'Grove', 
+                'abbreviation': 'Grv'
+            },
+            { 
+                'name': 'Heights', 
+                'abbreviation': 'Hts'
+            },
+            { 
+                'name': 'Highway', 
+                'abbreviation': 'Hwy'
+            },
+            { 
+                'name': 'Junction', 
+                'abbreviation': 'Jct'
+            },
+            { 
+                'name': 'Key', 
+                'abbreviation': 'Key'
+            },
+            { 
+                'name': 'Lane', 
+                'abbreviation': 'Ln'
+            },
+            { 
+                'name': 'Loop', 
+                'abbreviation': 'Loop'
+            },
+            { 
+                'name': 'Manor', 
+                'abbreviation': 'Mnr'
+            },
+            { 
+                'name': 'Mill', 
+                'abbreviation': 'Mill'
+            },
+            { 
+                'name': 'Park', 
+                'abbreviation': 'Park'
+            },
+            { 
+                'name': 'Parkway', 
+                'abbreviation': 'Pkwy'
+            },
+            { 
+                'name': 'Pass', 
+                'abbreviation': 'Pass'
+            },
+            { 
+                'name': 'Path', 
+                'abbreviation': 'Path'
+            },
+            { 
+                'name': 'Pike', 
+                'abbreviation': 'Pike'
+            },
+            { 
+                'name': 'Place', 
+                'abbreviation': 'Pl'
+            },
+            { 
+                'name': 'Plaza', 
+                'abbreviation': 'Plz'
+            },
+            { 
+                'name': 'Point', 
+                'abbreviation': 'Pt'
+            },
+            { 
+                'name': 'Ridge', 
+                'abbreviation': 'Rdg'
+            },
+            { 
+                'name': 'River', 
+                'abbreviation': 'Riv'
+            },
+            { 
+                'name': 'Road', 
+                'abbreviation': 'Rd'
+            },
+            { 
+                'name': 'Square', 
+                'abbreviation': 'Sq'
+            },
+            { 
+                'name': 'Street', 
+                'abbreviation': 'St'
+            },
+            { 
+                'name': 'Terrace', 
+                'abbreviation': 'Ter'
+            },
+            { 
+                'name': 'Trail', 
+                'abbreviation': 'Trl'
+            },
+            { 
+                'name': 'Turnpike', 
+                'abbreviation': 'Tpke'
+            },
+            { 
+                'name': 'View', 
+                'abbreviation': 'Vw'
+            },
+            { 
+                'name': 'Way', 
+                'abbreviation': 'Way'
+            }
+]
+
+# Abbreviations taken from here http://ruspostindex.ru/abr.html
+streets_suffixes['ru'] = [
+   
+            { 
+                'name': 'Проспект', 
+                'abbreviation': 'пр-кт'
+            },
+            { 
+                'name': 'Бульвар', 
+                'abbreviation': 'б-р'
+            },
+            { 
+                'name': 'Переулок', 
+                'abbreviation': 'пер.'
+            },
+            { 
+                'name': 'Проезд', 
+                'abbreviation': 'пр.'
+            },
+            {
+                'name': 'Улица',
+                'abbreviation': 'ул.'
+            }
+]

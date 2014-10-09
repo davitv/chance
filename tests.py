@@ -412,12 +412,12 @@ class TestNameFunction(unittest.TestCase):
         from dictionaries import last_names, first_names
         first_names = first_names['ru']
         last_names= last_names['ru']
-        for x in xrange(20):
+        for x in xrange(200):
             name = chance.name(gender='m', language='ru')
             first, last = name.split(' ')
             self.assertTrue(first in first_names['m'])
             self.assertTrue(last in last_names['m'])
-        for x in xrange(20):
+        for x in xrange(200):
             name = chance.name(gender='f', language='ru')
             first, last = name.split(' ')
             self.assertTrue(first in first_names['f'])

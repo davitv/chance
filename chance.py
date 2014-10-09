@@ -196,6 +196,8 @@ def last(gender='', language='en'):
 
 
 def name(gender='', language='en'):
+    if not gender:
+        gender = 'f' if boolean() else 'm'
     return first(gender, language) + ' ' + last(gender, language)
 
 

@@ -388,12 +388,12 @@ class TestLastNameFunction(unittest.TestCase):
 
 class TestNameFunction(unittest.TestCase):
 
-    def test_first_returns_correct_value(self):
+    def test_name_returns_correct_value(self):
         for x in xrange(20):
             self.assertEquals(str, type(chance.name()))
 
 
-    def test_first_returns_only_gender_specified_name(self):
+    def test_name_returns_only_gender_specified_name(self):
         from dictionaries import last_names, first_names
         first_names = first_names['en']
         last_names= last_names['en']
@@ -404,6 +404,21 @@ class TestNameFunction(unittest.TestCase):
             self.assertTrue(last in last_names['m'])
         for x in xrange(20):
             name = chance.name(gender='f')
+            first, last = name.split(' ')
+            self.assertTrue(first in first_names['f'])
+            self.assertTrue(last in last_names['f'])
+
+    def test_name_returns_only_language_specified_name(self):
+        from dictionaries import last_names, first_names
+        first_names = first_names['ru']
+        last_names= last_names['ru']
+        for x in xrange(20):
+            name = chance.name(gender='m', language='ru')
+            first, last = name.split(' ')
+            self.assertTrue(first in first_names['m'])
+            self.assertTrue(last in last_names['m'])
+        for x in xrange(20):
+            name = chance.name(gender='f', language='ru')
             first, last = name.split(' ')
             self.assertTrue(first in first_names['f'])
             self.assertTrue(last in last_names['f'])

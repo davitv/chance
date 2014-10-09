@@ -168,7 +168,6 @@ def first(gender='', language='en'):
     if not gender:
         gender = 'f' if boolean() else 'm'
     elif gender[0] != 'f' and gender[0] != 'm':
-        print gender
         raise chance_exceptions.WrongArgumentValue("gender should be one of this: m (male), f (female)")
     else:
         gender = gender[0]
@@ -197,7 +196,7 @@ def last(gender='', language='en'):
 
 
 def name(gender='', language='en'):
-    return first(gender) + ' ' + last(gender)
+    return first(gender, language) + ' ' + last(gender, language)
 
 
 def hex_hash(length=20):

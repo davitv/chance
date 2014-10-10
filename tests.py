@@ -496,7 +496,14 @@ class TestIpFunction(unittest.TestCase):
             self.assertTrue(ip_pattern.match(chance.ip()) != None)
 
 
-
+class TestStreetFunction(unittest.TestCase):
+    def test_street_returns_string_type(self):
+        for x in xrange(10):
+            self.assertEquals(type(chance.street()), str)
+    
+    def test_street_returns_unicode(self):
+        for x in xrange(10):
+            self.assertEquals(type(chance.street(language='ru')), unicode)
 
 if __name__ == '__main__':
     unittest.main()

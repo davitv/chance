@@ -211,23 +211,23 @@ streets_suffixes['en'] = [
 streets_suffixes['ru'] = [
    
             { 
-                'name': 'Проспект', 
-                'abbreviation': 'пр-кт'
+                'name': u'Проспект', 
+                'abbreviation': u'пр-кт'
             },
             { 
-                'name': 'Бульвар', 
-                'abbreviation': 'б-р'
+                'name': u'Бульвар', 
+                'abbreviation': u'б-р'
             },
             { 
-                'name': 'Переулок', 
-                'abbreviation': 'пер.'
+                'name': u'Переулок', 
+                'abbreviation': u'пер.'
             },
             { 
-                'name': 'Проезд', 
-                'abbreviation': 'пр.'
+                'name': u'Проезд', 
+                'abbreviation': u'пр.'
             },
             {
-                'name': 'Улица',
-                'abbreviation': 'ул.'
+                'name': u'Улица',
+                'abbreviation': u'ул.'
             }
 ]

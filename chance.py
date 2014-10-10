@@ -65,11 +65,11 @@ def syllable(length=0, minimum=2, maximum=3, vowel_first=False, language='en'):
     length = length or random.randint(minimum, maximum)
 
     if not language in dictionaries.consonants:
-        raise DictionaryException("consonants pool for language " + language + " not found"
+        raise DictionaryException("consonants pool for specified language  not found"
                                   " in dictionaries.py")
     
     if not language in dictionaries.vowels:
-        raise DictionaryException("vowels pool for language " + language + " not found"
+        raise DictionaryException("vowels pool for specified language  not found"
                                   " in dictionaries.py")
             
     if vowel_first:
@@ -252,3 +252,15 @@ def email(dom=''):
 def ip():
     tup = (str(random.randint(0, 255)) for x in xrange(4))
     return '.'.join(tup)
+
+
+def street(language='en', short_suffix=True):
+    
+    if not language in dictionaries.streets_suffixes:
+        raise DictionaryException("street suffixs pool for specified language  not found"
+                                  " in dictionaries.py")
+
+    streets_suffixes = dictionaries.streets_suffixes[language]
+    suffix_type = 'abbreviation' if short_suffix else 'name'
+    suffix = streets_suffixes[random.randint(0, len(streets_suffixes)-1)][suffix_type]
+    return suffix + ' ' + word(language=language).capitalize()

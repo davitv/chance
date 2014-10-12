@@ -4,9 +4,6 @@ import datetime
 import dictionaries
 
 
-
-
-
 def boolean(likelihood=50):
     if likelihood < 0 or likelihood > 100:
         raise WrongArgumentValue(
@@ -254,7 +251,7 @@ def ip():
     return '.'.join(tup)
 
 
-def street(language='en', short_suffix=True):
+def street(language='en', short_suffix=False):
     
     if not language in dictionaries.streets_suffixes:
         raise DictionaryException("street suffixs pool for specified language  not found"
@@ -263,4 +260,79 @@ def street(language='en', short_suffix=True):
     streets_suffixes = dictionaries.streets_suffixes[language]
     suffix_type = 'abbreviation' if short_suffix else 'name'
     suffix = streets_suffixes[random.randint(0, len(streets_suffixes)-1)][suffix_type]
+    if language == 'en':
+        return word(language=language).capitalize() + ' ' + suffix
+    elif language == 'ru':
+        suffix + ' ' + word(language=language).capitalize()
+
     return suffix + ' ' + word(language=language).capitalize()
+
+
+def state(language='en', short=False):
+    if not language in dictionaries.states:
+        raise DictionaryException("states pool for specified language  not found"
+                                  " in dictionaries.py")
+    states = dictionaries.states[language]
+    if short:
+        kind = 'abbreviation'
+    else:
+        kind = 'name'
+    rand = random.randint(0, len(states)-1)
+    return states[rand][kind]
+
+
+def city(language='en'):
+    return word(3, language).capitalize()
+
+def phone(formatted=True, groups=4):
+    prefix = ''
+    for x in xrange(3):
+        prefix += str(random.randint(0, 9))
+
+    suffix  = []
+    for x in xrange(groups):
+        tmp = ''
+        for x in xrange(3):
+            tmp += str(random.randint(0, 9))
+        suffix.append(tmp)
+    if formatted:
+        res = '(' + prefix + ')' + ' ' + '-'.join(suffix)
+    else:
+        res = prefix + ''.join(suffix)
+
+    return res
+
+functions_map = {
+    'boolean' : boolean,
+    'character': character,
+    'string': string,
+    'syllable': syllable,
+    'word': word,
+    'sentence': sentence,
+    'paragraph': paragraph,
+    'age': age,
+    'date': date,
+    'birthday': birthday,
+    'first': first,
+    'last': last,
+    'name': name,
+    'hex_hash': hex_hash,
+    'color': color,
+    'domain': domain,
+    'email':email,
+    'ip':ip,
+    'street':street,
+    'state': state,
+    'city': city,
+    'phone': phone
+}
+
+def dictionary(values, language='en' ):
+    l = language
+    result = dict()
+    for key in values:
+        if not key in functions_map:
+            result[key] = values[key]
+        else:
+            result[key] = functions_map[key](**values[key])
+    return result

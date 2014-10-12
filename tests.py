@@ -505,5 +505,54 @@ class TestStreetFunction(unittest.TestCase):
         for x in xrange(10):
             self.assertEquals(type(chance.street(language='ru')), unicode)
 
+
+class TestStateFunction(unittest.TestCase):
+    def test_state_returns_string(self):
+        for x in xrange(20):
+            self.assertEquals(type(chance.state()), str)
+
+    def test_short_state(self):
+        for x in xrange(20):
+            st = chance.state(short=True)
+            self.assertTrue(len(st) > 1 and len(st) < 4)
+
+    def test_state_returns_correct_language(self):
+        all_states = [x['name'] for x in dictionaries.states['en']]
+        for x in xrange(20):
+            self.assertTrue(chance.state() in all_states)
+
+    def test_state_short_returns_correct_language(self):
+        all_states = [x['abbreviation'] for x in dictionaries.states['en']]
+        for x in xrange(20):
+            self.assertTrue(chance.state(short=True) in all_states)
+
+
+class TestCityFuncton(unittest.TestCase):
+    def test_city_returns_string(self):
+        for x in xrange(20):
+            self.assertEquals(type(chance.city()), str)
+
+
+class TestPhoneFunction(unittest.TestCase):
+    def test_phone_returns_string(self):
+        for x in xrange(20):
+           self.assertEquals(str, type(chance.phone()))    
+
+class TestDictionaryFunction(unittest.TestCase):
+    def test_dictionary_returns_dict(self):
+        example = {
+            'first': dict(language='ru'),
+            'last': dict(language='ru'),
+            'phone': dict(),
+            'email': dict(),
+            'birthday': dict(),
+            'password': '123'
+        }
+        for x in xrange(10):
+            d = chance.dictionary(example)
+            for key in example:
+                self.assertTrue(key in d)
+            print d['first'] + ' ' + d['last'] + ' ' + d['password']
+
 if __name__ == '__main__':
     unittest.main()

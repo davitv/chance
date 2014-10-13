@@ -22,20 +22,32 @@ chance.boolean(likelihood=20) # more false values
 #####character
 Rerturning a random character (lower or uppercase) or symbol
 ```
-# will produce symbol or alpha
+# random symbol or alpha
 chance.character(pool='', alpha=True, symbols=True, numbers=False, case='any') 
 
-chance.character(pool='', alpha=False, symbols=True, numbers=False, case='any') 
-# will produce symbol only
+# random symbol only
+chance.character(pool='', alpha=False, symbols=True, numbers=False, case='any')
+
+# random symbol from sepcified pool
+chance.character(pool='12!') # 1 or 2 or !
+
+# random symbol from russian language characters pool from dictionaries.py
+chance.character(language='ru') 
+
+
 ```
 
 #####string
 Rerturning a random string by calling chance.character(pool) length times
 ```
-# will string from symbols or alphas
-chance.string(pool='', length=0, minimum=5, maximum=20)
+# random string from symbols or alphas
+chance.string(pool='', length=0)
 
-# custom pool also can be passed
-chance.string(pool='abcdef8', length=0, minimum=5, maximum=20)
+# if length is 0 (default value) and minimum and maximum specified
+# will poduce string with random length, from minimum to maximum
+chance.string(pool='abcdef8', minimum=5, maximum=20)
 
+# random string from russian language characters pool from dictionaries.py
+# basically, will call chance.character(language='ru')
+chance.string(language='ru')
 ```

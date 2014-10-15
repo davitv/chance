@@ -20,7 +20,7 @@ chance.boolean(likelihood=20) # more false values
 ```
 
 #####character
-Rerturning a random character (lower or uppercase) or symbol
+Returning a random character (lower or uppercase) or symbol
 ```
 # random symbol or alpha
 chance.character(pool='', alpha=True, symbols=True, numbers=False, case='any') 
@@ -38,7 +38,7 @@ chance.character(language='ru')
 ```
 
 #####string
-Rerturning a random string by calling chance.character(pool) length times
+Returning a random string by calling chance.character(pool) length times
 ```
 # random string from symbols or alphas
 chance.string(pool='', length=0)
@@ -50,4 +50,61 @@ chance.string(pool='abcdef8', minimum=5, maximum=20)
 # random string from russian language characters pool from dictionaries.py
 # basically, will call chance.character(language='ru')
 chance.string(language='ru')
+```
+
+
+#####syllable
+Creating a random syllable by alternately concatenating vowel and consonant.
+By default, starts from consonant, but with vowel_first parameter turned True
+vowel will be first. 
+```
+# random syllable with consonant first
+chance.syllable(language='en', length=0, minimum=2, maximum=3, vowel_first=False)
+
+# random syllable with vowel first
+chance.syllable(vowel_first=True)
+
+# random syllable from russian characters pool
+chance.syllable(language='ru', vowel_first=True)
+```
+
+
+
+#####word
+Generating random word by concatenating few syllables.
+
+```
+# random word
+chance.word(language='en')
+
+# random word from russian chars pool
+chance.word('ru')
+
+```
+
+#####sentence
+Generating random sentence by concatenating few words.
+
+```
+# random sentence
+chance.sentence(language='en')
+
+# random sentence from russian chars pool with
+# '!' at the end
+chance.sentence(language='ru', ended_by='!')
+
+```
+
+
+#####paragraph
+Generating paragraph by concatenating sentences.
+
+```
+# random sentence
+chance.paragraph()
+
+# random paragraph from russian chars pool with
+# which contains 20 sentences
+chance.paragraph(language='ru', sentences=20)
+
 ```

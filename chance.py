@@ -326,13 +326,17 @@ functions_map = {
     'city': city,
     'phone': phone
 }
-
+example = {
+    'streetway': ('street', {'language': 'ru'})
+}
 def dictionary(values, language='en' ):
     l = language
     result = dict()
     for key in values:
-        if not key in functions_map:
+        fname = values[key][0]
+        if not fname in functions_map:
             result[key] = values[key]
         else:
-            result[key] = functions_map[key](**values[key])
+            params = values[key][1] if len(values[key]) == 2 else {}
+            result[key] = functions_map[fname](**params)
     return result

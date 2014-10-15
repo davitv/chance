@@ -541,18 +541,18 @@ class TestPhoneFunction(unittest.TestCase):
 class TestDictionaryFunction(unittest.TestCase):
     def test_dictionary_returns_dict(self):
         example = {
-            'first': dict(language='ru'),
-            'last': dict(language='ru'),
-            'phone': dict(),
-            'email': dict(),
-            'birthday': dict(),
+            'first_name': ('first', dict(language='ru')),
+            'last_name': ('last', dict(language='ru')),
+            'phone': ('phone', dict()),
+            'email': ('email', dict()),
+            'birthday': ('birthday', dict()),
             'password': '123'
         }
         for x in xrange(10):
             d = chance.dictionary(example)
             for key in example:
                 self.assertTrue(key in d)
-            print d['first'] + ' ' + d['last'] + ' ' + d['password']
+            
 
 if __name__ == '__main__':
     unittest.main()

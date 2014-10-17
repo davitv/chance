@@ -108,3 +108,96 @@ chance.paragraph()
 chance.paragraph(language='ru', sentences=20)
 
 ```
+
+#####age
+Actually, generating random integer, which interval is based on period parameter.
+```
+# periods is a dict with values for random.randint(fr, to)
+periods = {
+         'child': (1, 12),
+         'teen': (13, 19),
+         'adult': (18, 120),
+         'senior': (65, 120),
+         'age': (1, 120),
+}
+# from 1 to 12
+chance.age('child')
+
+# from 18 to 120
+chance.age('adult')
+
+```
+
+#####date
+Returning datetime object. It's possible to choose which date value will be randomly generated
+(year, month, day, hour, minutes), by default all of them will be random. Also you can pass minimal
+year as minyear parameter.
+All parameters should be integers.
+
+```
+# will return datetime object with minimal year 500
+chance.date(year=0, month=0, day=0, hour=0, minutes=0, minyear=500)
+
+# every time value will be random, except year
+chance.date(year=2012)
+
+# only hour and minutes will be randomly generated
+chance.date(year=1999, month=8, day=12)
+
+```
+
+#####birthday
+This function based on chance.date function, it's calling chance.age function and
+passing returned value to chance.date as year parameter. You can specify period just like in age function.
+
+```
+# will return random birth date of a teenager
+chance.birthday('teen')
+
+# random adults birthday
+chance.birthday('adult')
+
+```
+
+#####first
+Returning a first name, randomly selected from dictionary, located in dictionaries.py.
+You can add more names localisation there.
+```
+# first name in english, male or female
+chance.first()
+
+# this one will be female name, english again
+chance.first(gender='f')
+
+# russian male name
+chance.first(language='ru', gender='m')
+
+```
+
+#####last
+Similar to chance.first function. Same parameters, same algorythm, just another dictionary used.
+```
+# last name in english, male or female
+chance.last()
+
+# this one will be female surname, english again
+chance.last(gender='f')
+
+# russian male surname
+chance.last(language='ru', gender='m')
+
+```
+
+#####name
+Just a shorthand function, for calling chance.first(<params>) + ' ' + chance.last(<params>)
+```
+# name in english, male or female
+chance.name()
+
+# this one will be female name, english again (chance.first(gender='f') + ' ' + chance.last(gender='f')
+chance.name(gender='f')
+
+# russian male name
+chance.name(language='ru', gender='m')
+
+```

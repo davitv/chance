@@ -340,7 +340,9 @@ functions_map = {
     'street':street,
     'state': state,
     'city': city,
-    'phone': phone
+    'phone': phone,
+    'path': path,
+    'filepath': filepath
 }
 example = {
     'streetway': ('street', {'language': 'ru'})

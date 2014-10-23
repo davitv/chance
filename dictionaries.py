@@ -23,7 +23,32 @@ hex_pool = numbers + 'abcdef'
 max_int = 9007199254740992
 min_int = -max_int
 
-
+extentions = (
+    'txt',
+    'jpg',
+    'jpeg',
+    'png',
+    'js',
+    'py',
+    'java',
+    'c',
+    'cpp',
+    'h',
+    'md',
+    'avi',
+    'mp4',
+    'ogg',
+    'mp3',
+    'so',
+    'dll',
+    'sh',
+    'wav',
+    'wmv',
+    'css',
+    'html',
+    'xml',
+    'cs',
+)
 
 # First names =====================================
 first_names = dict()

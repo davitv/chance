@@ -552,6 +552,68 @@ class TestDictionaryFunction(unittest.TestCase):
             d = chance.dictionary(example)
             for key in example:
                 self.assertTrue(key in d)
+
+
+class TestUnixPathFunction(unittest.TestCase):
+    
+    def test_correct_value(self):
+        path = chance.path()
+        for x in xrange(4):
+            self.assertTrue(isinstance(path, str))
+
+        for x in xrange(4):
+            self.assertTrue(isinstance(path, str))
+            self.assertEquals(len(chance.path(depth=3).split('/')), 4)
+            self.assertEquals(len(chance.path(depth=4).split('/')), 5)
+            self.assertEquals(len(chance.path(depth=6).split('/')), 7)
+
+        for x in xrange(4):
+            self.assertTrue(len(chance.path().split('/')) >= 5 and len(chance.path().split('/')) <= 7)
+           
+
+class TestUnixFilePathFunction(unittest.TestCase):
+    
+    def test_correct_value_type(self):
+        path = chance.filepath()
+        for x in xrange(4):
+            self.assertTrue(isinstance(path, str))
+
+    def test_unix_filepath_kind(self):
+        for x in xrange(20):
+            fpath = chance.filepath()
+            pieces = fpath.split('/')
+            self.assertTrue(len(pieces) >= 6 and len(pieces) <= 8, (len(pieces), pieces,))
+            self.assertTrue(pieces[-1:][0].find('.') > 0)
+            
+    def test_unix_filepath_returns_correct_extention(self):
+        exts = ['hhj']
+        for x in xrange(20):
+            fpath = chance.filepath(extentions=exts)
+            pieces = fpath.split('/')
+            self.assertTrue(len(pieces) >= 6 and len(pieces) <= 8, (len(pieces), pieces,))
+            self.assertTrue(pieces[-1:][0].find('.') > 0)
+            ext = pieces[-1:][0].split('.')[1]
+            self.assertTrue( any(ext == x for x in exts))
+        
+        exts = ['txt', 'emuy']
+        for x in xrange(20):
+            fpath = chance.filepath(extentions=exts)
+            pieces = fpath.split('/')
+            self.assertTrue(len(pieces) >= 6 and len(pieces) <= 8, (len(pieces), pieces,))
+            self.assertTrue(pieces[-1:][0].find('.') > 0)
+            ext = pieces[-1:][0].split('.')[1]
+            self.assertTrue( any(ext == x for x in exts))
+
+        exts = ['txt', 'emuy', 'core']
+        for x in xrange(20):
+            fpath = chance.filepath(extentions=exts)
+            pieces = fpath.split('/')
+            self.assertTrue(len(pieces) >= 6 and len(pieces) <= 8, (len(pieces), pieces,))
+            self.assertTrue(pieces[-1:][0].find('.') > 0)
+            ext = pieces[-1:][0].split('.')[1]
+            self.assertTrue( any(ext == x for x in exts))
+
+
             
 
 if __name__ == '__main__':

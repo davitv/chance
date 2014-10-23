@@ -302,6 +302,22 @@ def phone(formatted=True, groups=4):
 
     return res
 
+def path(depth=0, minimum=4, maximum=6):
+	delimeter = '/'
+	folders = []
+	depth = depth or random.randint(minimum, maximum)
+	for x in xrange(depth):
+		folders.append(word())
+
+	return delimeter + delimeter.join(folders)
+
+def filepath(extentions=[], depth=0, minimum=4, maximum=6):
+	extentions = extentions or dictionaries.extentions
+	result = path(depth, minimum, maximum)
+	extention = extentions[random.randint(0, len(extentions)-1)]
+	result += '/' + word() + '.' + extention
+	return result 
+
 functions_map = {
     'boolean' : boolean,
     'character': character,

@@ -4,6 +4,16 @@ chance
 
 Recently i found javascript generator  called [chance](http://chancejs.com/) written by  [Victor Quinn](http://victorquinn.com/). I liked it a lot and found it quite useful for programms testing or filling something with dump data. I could't find anything similar for python so i decided to write it on my own, using chance.js implementation as a guide. 
 
+##Installation
+As easy as:
+```
+pip install chance
+```
+Then just:
+```
+from chance import chance
+```
+
 ##Usage
 
 ####Basic
@@ -201,3 +211,94 @@ chance.name(gender='f')
 chance.name(language='ru', gender='m')
 
 ```
+
+
+#####hex_hash
+Return a random hex hash. Defahult length is 20.
+```
+chance.hash()
+chance.hash(length=25)
+```
+
+
+#####color
+Return a color. Available formats are hex and rgb with grayscale option. 
+```
+chance.color() # #d722ef
+chance.color(form='rgb') # rgb(168, 187, 156)
+chance.color(grayscale=True) # '#e5e5e5'
+chance.color(form='rgb', grayscale=True) # rgb(176, 176, 176)
+```
+
+#####domain
+Return a random domain name. You can specify tld.
+```
+chance.domain() # zircoz.com
+chance.domain('ru') # wippok.ru
+chance.domain(tld='eu') # vovupjib.eu
+```
+
+#####email
+Return a random email with optionally specified domain name.
+```
+chance.email() # banku@cagvil.org
+chance.email(dom='edu.com') # nigu@edu.com
+```
+
+#####ip
+Return a random ip.
+```
+chance.ip() # 201.248.197.225
+```
+
+
+#####street
+Return a random street name. Available options are short suffix and language.
+```
+chance.street() # Vehu Highway
+chance.street(short_suffix=True) # Wemvofhu Rdg
+chance.street(language='ru') # Переулок Симгудвыд
+chance.street(language='ru', short_suffix=True) # ул. Тосэкэг
+```
+
+
+#####state
+Random state name which depends on language option. For "en" it will be on of USA states,
+and with 'ru' Russian one. You can also specify option for short names.
+```
+chance.state() # Wisconsin
+chance.state(language='ru') # Кемеровская область
+chance.state(language='ru', ) # Переулок Симгудвыд
+chance.state(language='ru', short=True) # ул. Орен. обл.
+chance.state(language='en', short=True) # VI
+```
+
+
+#####city
+Random city name with optional language parameter.
+```
+chance.city() # Nowochel
+chance.city(language='ru') # Вызящу
+```
+
+#####path
+Local folder path. Exact depth can be specified or minimum and maximum of it.
+```
+chance.path() # /judip/sebozfir/zamuthej/bozi/tutweki/wuchihu
+chance.path(depth=4) # /tacpozsu/noddo/soke/hegof
+chance.path(minimum=4, maximum=7) # /gonuhce/popag/tujubzin/modevmo/hozi
+```
+
+
+#####filepath
+Local path to file. Options are same as for path, but extentions list
+can be optionally added.
+```
+chance.filepath() # /decu/dosa/locavu/roskekib/belomlew/robpa.css
+chance.filepath(depth=4) # /ruplu/hutcuvaf/tihku/fubjepot/jeribo.mp3'
+chance.filepath(minimum=4, maximum=7) # /munos/bowafi/sanasza/vehodru/woraz/mukhetna/lona.html
+chance.filepath(extentions=['py', 'cpp']) # /jebzihis/misge/nira/cizollos/tazfetti/fotatcil/didfonih.cpp
+```
+
+
+

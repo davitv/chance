@@ -7,7 +7,7 @@ setup(
   author = 'Davit Vardanyan',
   author_email = 'davoimail@gmail.com',
   url = 'https://github.com/davitv/chance',
-  download_url = 'https://github.com/peterldowns/mypackage/tarball/0.1', # I'll explain this in a second
-  keywords = ['random', 'generator', 'chancejs'], # arbitrary keywords
+  download_url = 'http://github.com/davitv/chance/tarball/0.1',
+  keywords = ['random', 'generator', 'chancejs'],
   classifiers = [],
 )

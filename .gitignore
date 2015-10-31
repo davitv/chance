@@ -1,2 +1,4 @@
 *.pyc
-name_parser.py
+MANIFEST
+dist
+.idea

@@ -9,23 +9,22 @@ def boolean(likelihood=50):
         raise WrongArgumentValue(
             "likelihood argument value provided for chance.boolean(likelihood) accepts numbers from 0 to 100."
             )
-    return random.random()  * 100 < likelihood
+    return random.random() * 100 < likelihood
 
 
 def character(pool='', alpha=True, symbols=True, numbers=False, case='any', language='en'):
 
-    if not isinstance(pool, (str)):
+    if not isinstance(pool, str):
         raise WrongArgumentValue("Pool argument must be string instance")
     
-    if not language in dictionaries.chars_lower:
+    if language not in dictionaries.chars_lower:
         raise DictionaryException("chars_lower pool for language " + language + " not"
                                   " in dictionaries.py")
 
-            
-    CHARS_LOWER = dictionaries.chars_lower[language]
+    chars_lower = dictionaries.chars_lower[language]
     if not pool:
         if alpha:
-            pool += CHARS_LOWER
+            pool += chars_lower
         
         if case == 'upper':
             pool = pool.upper()
@@ -43,7 +42,7 @@ def character(pool='', alpha=True, symbols=True, numbers=False, case='any', lang
 
 def string(pool='', length=0, minimum=5, maximum=20, language='en'):
 
-    if not isinstance(pool, (str)):
+    if not isinstance(pool, str):
         raise WrongArgumentValue("pool argument must be string instance")
 
     length = length or random.randint(minimum, maximum)
@@ -56,16 +55,16 @@ def string(pool='', length=0, minimum=5, maximum=20, language='en'):
 
 def syllable(length=0, minimum=2, maximum=3, vowel_first=False, language='en'):
     
-    if not isinstance(length, (int)) or length < 0:
+    if not isinstance(length, int) or length < 0:
         raise WrongArgumentValue("length argument must be a positive integer")
 
     length = length or random.randint(minimum, maximum)
 
-    if not language in dictionaries.consonants:
+    if language not in dictionaries.consonants:
         raise DictionaryException("consonants pool for specified language  not found"
                                   " in dictionaries.py")
     
-    if not language in dictionaries.vowels:
+    if language not in dictionaries.vowels:
         raise DictionaryException("vowels pool for specified language  not found"
                                   " in dictionaries.py")
             
@@ -84,7 +83,7 @@ def syllable(length=0, minimum=2, maximum=3, vowel_first=False, language='en'):
 
 def word(syllables=0, language='en'):
     
-    if not isinstance(syllables, (int)) or syllables < 0:
+    if not isinstance(syllables, int) or syllables < 0:
         raise WrongArgumentValue("syllables argument must be a positive integer")
     
     syllables = syllables or random.randint(2,3)
@@ -94,12 +93,13 @@ def word(syllables=0, language='en'):
         result += syllable(language=language)
     return result
 
+
 def sentence(words=0, ended_by='', language='en'):
 
-    if not isinstance(words, (int)) or words < 0:
+    if not isinstance(words, int) or words < 0:
         raise WrongArgumentValue("words argument must be a positive integer")
     
-    if not isinstance(ended_by, (str)) or words < 0:
+    if not isinstance(ended_by, str) or words < 0:
         raise WrongArgumentValue("ended_by argument must be a string")
     
     if not ended_by:
@@ -116,7 +116,7 @@ def sentence(words=0, ended_by='', language='en'):
 
 def paragraph(sentences=0, language='en'):
 
-    if not isinstance(sentences, (int)) or sentences < 0:
+    if not isinstance(sentences, int) or sentences < 0:
         raise WrongArgumentValue("sentences argument must be a positive integer")
     
     last_char_pool = '.'*4+'?!'
@@ -130,14 +130,14 @@ def paragraph(sentences=0, language='en'):
 
 def age(period='age'):
     periods = {
-         'child': (1, 12),
-         'teen': (13, 19),
-         'adult': (18, 120),
-         'senior': (65, 120),
-         'age': (1, 120),
+        'child': (1, 12),
+        'teen': (13, 19),
+        'adult': (18, 120),
+        'senior': (65, 120),
+        'age': (1, 120),
     }
 
-    if not period in periods:
+    if period not in periods:
         raise WrongArgumentValue("period should be one of this: " + ', '.join(periods.keys()))
 
     return random.randint(periods[period][0], periods[period][1])
@@ -176,12 +176,11 @@ def first(gender='', language='en'):
     else:
         gender = gender[0]
 
-    if not language in dictionaries.first_names:
+    if language not in dictionaries.first_names:
         raise WrongArgumentValue(language + " dictionary for first name not found in dictionaries module")
     cur_dict = dictionaries.first_names[language][gender]
     name = cur_dict[random.randint(0, len(cur_dict)-1)]
     return name
-
 
 
 def last(gender='', language='en'):
@@ -192,7 +191,7 @@ def last(gender='', language='en'):
     else:
         gender = gender[0]
 
-    if not language in dictionaries.last_names:
+    if language not in dictionaries.last_names:
         raise WrongArgumentValue(language + " dictionary for first name not found in dictionaries module")
     cur_dict = dictionaries.last_names[language][gender]
     name = cur_dict[random.randint(0, len(cur_dict)-1)]
@@ -235,9 +234,10 @@ def domain(tld=''):
 
     return word() + '.' + tld
 
+
 def email(dom=''):
 
-    if not isinstance(dom, (str)):
+    if not isinstance(dom, str):
         raise WrongArgumentValue("dom (domain) argument must be a string")
     
     if not dom:
@@ -253,7 +253,7 @@ def ip():
 
 def street(language='en', short_suffix=False):
     
-    if not language in dictionaries.streets_suffixes:
+    if language not in dictionaries.streets_suffixes:
         raise DictionaryException("street suffixs pool for specified language  not found"
                                   " in dictionaries.py")
 
@@ -269,7 +269,7 @@ def street(language='en', short_suffix=False):
 
 
 def state(language='en', short=False):
-    if not language in dictionaries.states:
+    if language not in dictionaries.states:
         raise DictionaryException("states pool for specified language  not found"
                                   " in dictionaries.py")
     states = dictionaries.states[language]
@@ -284,12 +284,13 @@ def state(language='en', short=False):
 def city(language='en'):
     return word(3, language).capitalize()
 
+
 def phone(formatted=True, groups=4):
     prefix = ''
     for x in xrange(3):
         prefix += str(random.randint(0, 9))
 
-    suffix  = []
+    suffix = []
     for x in xrange(groups):
         tmp = ''
         for x in xrange(3):
@@ -302,24 +303,26 @@ def phone(formatted=True, groups=4):
 
     return res
 
-def path(depth=0, minimum=4, maximum=6):
-	delimeter = '/'
-	folders = []
-	depth = depth or random.randint(minimum, maximum)
-	for x in xrange(depth):
-		folders.append(word())
 
-	return delimeter + delimeter.join(folders)
+def path(depth=0, minimum=4, maximum=6):
+    delimeter = '/'
+    folders = []
+    depth = depth or random.randint(minimum, maximum)
+    for x in xrange(depth):
+        folders.append(word())
+
+    return delimeter + delimeter.join(folders)
+
 
 def filepath(extentions=[], depth=0, minimum=4, maximum=6):
-	extentions = extentions or dictionaries.extentions
-	result = path(depth, minimum, maximum)
-	extention = extentions[random.randint(0, len(extentions)-1)]
-	result += '/' + word() + '.' + extention
-	return result 
+    extentions = extentions or dictionaries.extentions
+    result = path(depth, minimum, maximum)
+    extention = extentions[random.randint(0, len(extentions)-1)]
+    result += '/' + word() + '.' + extention
+    return result
 
 functions_map = {
-    'boolean' : boolean,
+    'boolean': boolean,
     'character': character,
     'string': string,
     'syllable': syllable,
@@ -335,24 +338,37 @@ functions_map = {
     'hex_hash': hex_hash,
     'color': color,
     'domain': domain,
-    'email':email,
-    'ip':ip,
-    'street':street,
+    'email': email,
+    'ip': ip,
+    'street': street,
     'state': state,
     'city': city,
     'phone': phone,
     'path': path,
     'filepath': filepath
 }
-example = {
-    'streetway': ('street', {'language': 'ru'})
-}
-def dictionary(values, language='en' ):
-    l = language
+
+
+def dictionary(values):
+    """
+    This function generates dictionary
+    from values parameter.
+    For example this:
+    example = {
+        'streetway': ('street', {'language': 'en'}),
+        'first': ('first', {'language': 'en'})
+    }
+    chance.dictionary(example)
+    will output something like this:
+    {'streetway': 'Jabhuru Point', 'first': 'Eunice'}
+
+    :param values: dict
+    :return: dict
+    """
     result = dict()
     for key in values:
         fname = values[key][0]
-        if not fname in functions_map:
+        if fname not in functions_map:
             result[key] = values[key]
         else:
             params = values[key][1] if len(values[key]) == 2 else {}

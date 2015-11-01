@@ -223,16 +223,34 @@ def color(form='hex', grayscale=False):
     raise WrongArgumentValue('invalid format provided. Please provide one of "hex" or "rgb"')
 
 
-def domain(tld=''):
+def tld():
+    """
+    Return a random tld (Top Level Domain) from the tlds list below
+    :return: str
+    """
+    tlds = ('com', 'org', 'edu', 'gov', 'co.uk', 'net', 'io', 'ru', 'eu',)
+    return tlds[random.randint(0, len(tlds)-1)]
 
-    if not isinstance(tld, (str)):
-        raise WrongArgumentValue("tld argument must be a string")
-    
-    tlds = ('com', 'org', 'edu', 'gov', 'co.uk', 'net', 'io',)
-    if not tld:
-        tld = tlds[random.randint(0, len(tlds)-1)]
 
-    return word() + '.' + tld
+def domain(t=''):
+
+    if not isinstance(t, str):
+        raise WrongArgumentValue("t (tld) argument must be a string")
+
+    if not t:
+        t = tld()
+    return word() + '.' + t
+
+
+def url(dom='', p='', exts=''):
+
+    if not isinstance(dom, str):
+        raise WrongArgumentValue("dom (domain) argument must be a string")
+
+    dom = dom or domain()
+    p = p or path()
+    extention = '.' + exts[random.randint(0, len(exts)-1)] if exts else ''
+    return dom + p + extention
 
 
 def email(dom=''):
@@ -249,6 +267,27 @@ def email(dom=''):
 def ip():
     tup = (str(random.randint(0, 255)) for x in xrange(4))
     return '.'.join(tup)
+
+
+def ipv6():
+    return ':'.join((str(hex_hash(4)) for x in xrange(8)))
+
+
+def twitter():
+    return '@' + word()
+
+
+def country(language='en', short=False):
+    if language not in dictionaries.countries:
+        raise DictionaryException("countries pool for specified language  not found"
+                                  " in dictionaries.py")
+    countries = dictionaries.countries[language]
+    if short:
+        kind = 'code'
+    else:
+        kind = 'name'
+    rand = random.randint(0, len(countries)-1)
+    return countries[rand][kind]
 
 
 def street(language='en', short_suffix=False):
@@ -356,11 +395,11 @@ def dictionary(values):
     For example this:
     example = {
         'streetway': ('street', {'language': 'en'}),
-        'first': ('first', {'language': 'en'})
+        'first_name': ('first', {'language': 'en'})
     }
     chance.dictionary(example)
     will output something like this:
-    {'streetway': 'Jabhuru Point', 'first': 'Eunice'}
+    {'streetway': 'Jabhuru Point', 'first_name': 'Eunice'}
 
     :param values: dict
     :return: dict

@@ -212,7 +212,6 @@ chance.name(language='ru', gender='m')
 
 ```
 
-
 #####hex_hash
 Return a random hex hash. Defahult length is 20.
 ```
@@ -238,6 +237,16 @@ chance.domain('ru') # wippok.ru
 chance.domain(tld='eu') # vovupjib.eu
 ```
 
+#####url
+Generating url. Domain, path and file extentions are
+optional arguments.
+```
+chance.url() # pebwiwa.eu/huke/sipofnu/tummi/bowace
+chance.url(p='/1/2/3') # chance.url(p='/1/2/3') # wippok.ru
+chance.url(dom='example.com') # example.com/wecobi/vopoga/bizizuz/livtellu
+chance.url(exts=['py', 'cpp', 'css', 'html']) # kibuv.io/nocal/tepoji/sifezril/wozbochi/nalzolip/lonlumi.css
+```
+
 #####email
 Return a random email with optionally specified domain name.
 ```
@@ -251,14 +260,20 @@ Return a random ip.
 chance.ip() # 201.248.197.225
 ```
 
-
-#####street
-Return a random street name. Available options are short suffix and language.
+#####ipv6
+Just a random ipv6.
 ```
-chance.street() # Vehu Highway
-chance.street(short_suffix=True) # Wemvofhu Rdg
-chance.street(language='ru') # Переулок Симгудвыд
-chance.street(language='ru', short_suffix=True) # ул. Тосэкэг
+chance.ipv6() # 0ac7:c557:edf2:e048:00d9:615e:67f1:932b
+```
+
+#####country
+Random real country name. By default returns full name in 
+english, but language and short optional arguments can be used.
+```
+chance.country() # Australia
+chance.country(short=True) # NP
+chance.country(language='ru', ) # Норвегия
+chance.country(language='ru', short=True) # TL
 ```
 
 
@@ -280,6 +295,17 @@ Random city name with optional language parameter.
 chance.city() # Nowochel
 chance.city(language='ru') # Вызящу
 ```
+
+
+#####street
+Return a random street name. Available options are short suffix and language.
+```
+chance.street() # Vehu Highway
+chance.street(short_suffix=True) # Wemvofhu Rdg
+chance.street(language='ru') # Переулок Симгудвыд
+chance.street(language='ru', short_suffix=True) # ул. Тосэкэг
+```
+
 
 #####path
 Local folder path. Exact depth can be specified or minimum and maximum of it.

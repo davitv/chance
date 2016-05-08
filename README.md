@@ -2,7 +2,13 @@ chance
 ======
 
 
-Recently i found javascript generator  called [chance](http://chancejs.com/) written by  [Victor Quinn](http://victorquinn.com/). I liked it a lot and found it quite useful for programms testing or filling something with dump data. I could't find anything similar for python so i decided to write it on my own, using chance.js implementation as a guide. 
+There is an awesome random generator called [chance](http://chancejs.com/)
+written by [Victor Quinn](http://victorquinn.com/). It is quite useful for
+filling something with dump data which will look like real one in production.
+Also there can be a lot of other cases to use it.
+
+This lib written in Python, using chance.js implementation as a
+guide.
 
 ##Installation
 As easy as:
@@ -229,6 +235,15 @@ chance.color(grayscale=True) # '#e5e5e5'
 chance.color(form='rgb', grayscale=True) # rgb(176, 176, 176)
 ```
 
+
+#####tld
+Return a random tld (Top Level Domain) from this list:
+('com', 'org', 'edu', 'gov', 'co.uk', 'net', 'io', 'ru', 'eu',).
+No parameters supported for this function.
+```
+chance.tld() # 'org'
+```
+
 #####domain
 Return a random domain name. You can specify tld.
 ```
@@ -254,6 +269,16 @@ chance.email() # banku@cagvil.org
 chance.email(dom='edu.com') # nigu@edu.com
 ```
 
+#####phone
+Phone number, which can be formatted or not (it is by default).
+Groups parameter can be used to configure numbers amount after
+phone prefix.
+```
+chance.phone() # '(449) 936-062-335-345'
+chance.phone(formatted=False) # '952117233862906'
+chance.phone(groups=3) # '(229) 628-707-001'
+```
+
 #####ip
 Return a random ip.
 ```
@@ -264,6 +289,12 @@ chance.ip() # 201.248.197.225
 Just a random ipv6.
 ```
 chance.ipv6() # 0ac7:c557:edf2:e048:00d9:615e:67f1:932b
+```
+
+#####twitter
+Random twitter handle.
+```
+chance.twitter() # '@jewlo'
 ```
 
 #####country
@@ -324,6 +355,22 @@ chance.filepath() # /decu/dosa/locavu/roskekib/belomlew/robpa.css
 chance.filepath(depth=4) # /ruplu/hutcuvaf/tihku/fubjepot/jeribo.mp3'
 chance.filepath(minimum=4, maximum=7) # /munos/bowafi/sanasza/vehodru/woraz/mukhetna/lona.html
 chance.filepath(extentions=['py', 'cpp']) # /jebzihis/misge/nira/cizollos/tazfetti/fotatcil/didfonih.cpp
+```
+
+
+#####dictionary
+This function generates dictionary from values parameter.
+For example this:
+```
+example = {
+    'streetway': ('street', {'language': 'en'}),
+    'first_name': ('first', {'language': 'en'})
+}
+chance.dictionary(example)
+```
+will output something like this:
+```
+{'streetway': 'Jabhuru Point', 'first_name': 'Eunice'}
 ```
 
 

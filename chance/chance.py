@@ -1,20 +1,30 @@
+from __future__ import unicode_literals
+import sys
 import random
 from chance_exceptions import DictionaryException, WrongArgumentValue
 import datetime
 import dictionaries
 
+PY2 = sys.version_info[0] == 2
+PY3 = sys.version_info[0] == 3
+
+if PY3:
+    text_type = str
+else:
+    text_type = unicode
+
 
 def boolean(likelihood=50):
-    if likelihood < 0 or likelihood > 100:
+    if not isinstance(likelihood, int) or likelihood < 0 or likelihood > 100:
         raise WrongArgumentValue(
-            "likelihood argument value provided for chance.boolean(likelihood) accepts numbers from 0 to 100."
+            "likelihood argument value provided for chance.boolean(likelihood) accepts integers from 0 to 100."
             )
     return random.random() * 100 < likelihood
 
 
 def character(pool='', alpha=True, symbols=True, numbers=False, case='any', language='en'):
 
-    if not isinstance(pool, str):
+    if not isinstance(pool, text_type):
         raise WrongArgumentValue("Pool argument must be string instance")
     
     if language not in dictionaries.chars_lower:
@@ -42,7 +52,7 @@ def character(pool='', alpha=True, symbols=True, numbers=False, case='any', lang
 
 def string(pool='', length=0, minimum=5, maximum=20, language='en'):
 
-    if not isinstance(pool, str):
+    if not isinstance(pool, text_type):
         raise WrongArgumentValue("pool argument must be string instance")
 
     length = length or random.randint(minimum, maximum)
@@ -75,7 +85,7 @@ def syllable(length=0, minimum=2, maximum=3, vowel_first=False, language='en'):
 
     result = ''
 
-    for x in xrange(0, length):
+    for x in range(0, length):
         result += first[random.randint(0, len(first)-1)]
         first, second = second, first
     return result
@@ -89,7 +99,7 @@ def word(syllables=0, language='en'):
     syllables = syllables or random.randint(2,3)
 
     result = ''
-    for x in xrange(syllables):
+    for x in range(syllables):
         result += syllable(language=language)
     return result
 
@@ -99,7 +109,7 @@ def sentence(words=0, ended_by='', language='en'):
     if not isinstance(words, int) or words < 0:
         raise WrongArgumentValue("words argument must be a positive integer")
     
-    if not isinstance(ended_by, str) or words < 0:
+    if not isinstance(ended_by, text_type) or words < 0:
         raise WrongArgumentValue("ended_by argument must be a string")
     
     if not ended_by:
@@ -108,7 +118,7 @@ def sentence(words=0, ended_by='', language='en'):
         ended_by = ended_by[random.randint(0, len(ended_by)-1)]
     length = words or random.randint(12, 18)
     result = []
-    for x in xrange(length):
+    for x in range(length):
         result.append(word(language=language))
 
     return ' '.join(result).capitalize() + ended_by
@@ -122,7 +132,7 @@ def paragraph(sentences=0, language='en'):
     last_char_pool = '.'*4+'?!'
     length = sentences or random.randint(3, 7)
     result = []
-    for x in xrange(length):
+    for x in range(length):
         result.append(sentence(ended_by=last_char_pool, language=language))
     
     return ' '.join(result)
@@ -210,7 +220,7 @@ def hex_hash(length=20):
 
 def color(form='hex', grayscale=False):
     def gray(value, delimeter=''):
-        v = str(value)
+        v = text_type(value)
         return delimeter.join([v,v,v])
     
     if form == 'hex':
@@ -218,7 +228,8 @@ def color(form='hex', grayscale=False):
 
     if form == 'rgb':
         a, b, c = random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)
-        return 'rgb(' + gray(a, ', ') + ')' if grayscale else 'rgb(' + str(a) + ', ' + str(b) + ', ' + str(c) + ')'
+        return 'rgb(' + gray(a, ', ') + ')' if grayscale else u'rgb({0}, {1}, {2})'.format(text_type(a), text_type(b),
+                                                                                           text_type(c))
 
     raise WrongArgumentValue('invalid format provided. Please provide one of "hex" or "rgb"')
 
@@ -234,7 +245,7 @@ def tld():
 
 def domain(t=''):
 
-    if not isinstance(t, str):
+    if not isinstance(t, text_type):
         raise WrongArgumentValue("t (tld) argument must be a string")
 
     if not t:
@@ -244,7 +255,7 @@ def domain(t=''):
 
 def url(dom='', p='', exts=''):
 
-    if not isinstance(dom, str):
+    if not isinstance(dom, text_type):
         raise WrongArgumentValue("dom (domain) argument must be a string")
 
     dom = dom or domain()
@@ -255,7 +266,7 @@ def url(dom='', p='', exts=''):
 
 def email(dom=''):
 
-    if not isinstance(dom, str):
+    if not isinstance(dom, text_type):
         raise WrongArgumentValue("dom (domain) argument must be a string")
     
     if not dom:
@@ -265,12 +276,12 @@ def email(dom=''):
 
 
 def ip():
-    tup = (str(random.randint(0, 255)) for x in xrange(4))
+    tup = (text_type(random.randint(0, 255)) for x in range(4))
     return '.'.join(tup)
 
 
 def ipv6():
-    return ':'.join((str(hex_hash(4)) for x in xrange(8)))
+    return ':'.join((text_type(hex_hash(4)) for x in range(8)))
 
 
 def twitter():
@@ -326,14 +337,14 @@ def city(language='en'):
 
 def phone(formatted=True, groups=4):
     prefix = ''
-    for x in xrange(3):
-        prefix += str(random.randint(0, 9))
+    for x in range(3):
+        prefix += text_type(random.randint(0, 9))
 
     suffix = []
-    for x in xrange(groups):
+    for x in range(groups):
         tmp = ''
-        for x in xrange(3):
-            tmp += str(random.randint(0, 9))
+        for x in range(3):
+            tmp += text_type(random.randint(0, 9))
         suffix.append(tmp)
     if formatted:
         res = '(' + prefix + ')' + ' ' + '-'.join(suffix)
@@ -347,13 +358,13 @@ def path(depth=0, minimum=4, maximum=6):
     delimeter = '/'
     folders = []
     depth = depth or random.randint(minimum, maximum)
-    for x in xrange(depth):
+    for x in range(depth):
         folders.append(word())
 
     return delimeter + delimeter.join(folders)
 
 
-def filepath(extentions=[], depth=0, minimum=4, maximum=6):
+def filepath(extentions=None, depth=0, minimum=4, maximum=6):
     extentions = extentions or dictionaries.extentions
     result = path(depth, minimum, maximum)
     extention = extentions[random.randint(0, len(extentions)-1)]

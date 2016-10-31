@@ -1,9 +1,11 @@
 from __future__ import unicode_literals
+from __future__ import absolute_import
 import sys
 import random
-from chance_exceptions import DictionaryException, WrongArgumentValue
 import datetime
-import dictionaries
+
+from chance import dictionaries
+from chance.chance_exceptions import DictionaryException, WrongArgumentValue
 
 PY2 = sys.version_info[0] == 2
 PY3 = sys.version_info[0] == 3
@@ -26,7 +28,7 @@ def character(pool='', alpha=True, symbols=True, numbers=False, case='any', lang
 
     if not isinstance(pool, text_type):
         raise WrongArgumentValue("Pool argument must be string instance")
-    
+
     if language not in dictionaries.chars_lower:
         raise DictionaryException("chars_lower pool for language " + language + " not"
                                   " in dictionaries.py")
@@ -35,7 +37,7 @@ def character(pool='', alpha=True, symbols=True, numbers=False, case='any', lang
     if not pool:
         if alpha:
             pool += chars_lower
-        
+
         if case == 'upper':
             pool = pool.upper()
         elif case == 'any':
@@ -46,7 +48,7 @@ def character(pool='', alpha=True, symbols=True, numbers=False, case='any', lang
 
         if numbers:
             pool += dictionaries.numbers
-        
+
     return pool[random.randint(0, len(pool) - 1)]
 
 
@@ -64,7 +66,7 @@ def string(pool='', length=0, minimum=5, maximum=20, language='en'):
 
 
 def syllable(length=0, minimum=2, maximum=3, vowel_first=False, language='en'):
-    
+
     if not isinstance(length, int) or length < 0:
         raise WrongArgumentValue("length argument must be a positive integer")
 
@@ -73,11 +75,11 @@ def syllable(length=0, minimum=2, maximum=3, vowel_first=False, language='en'):
     if language not in dictionaries.consonants:
         raise DictionaryException("consonants pool for specified language  not found"
                                   " in dictionaries.py")
-    
+
     if language not in dictionaries.vowels:
         raise DictionaryException("vowels pool for specified language  not found"
                                   " in dictionaries.py")
-            
+
     if vowel_first:
         first, second = dictionaries.vowels[language], dictionaries.consonants[language]
     else:
@@ -92,10 +94,10 @@ def syllable(length=0, minimum=2, maximum=3, vowel_first=False, language='en'):
 
 
 def word(syllables=0, language='en'):
-    
+
     if not isinstance(syllables, int) or syllables < 0:
         raise WrongArgumentValue("syllables argument must be a positive integer")
-    
+
     syllables = syllables or random.randint(2,3)
 
     result = ''
@@ -108,10 +110,10 @@ def sentence(words=0, ended_by='', language='en'):
 
     if not isinstance(words, int) or words < 0:
         raise WrongArgumentValue("words argument must be a positive integer")
-    
+
     if not isinstance(ended_by, text_type) or words < 0:
         raise WrongArgumentValue("ended_by argument must be a string")
-    
+
     if not ended_by:
         ended_by = '.'
     elif len(ended_by) > 1:
@@ -128,13 +130,13 @@ def paragraph(sentences=0, language='en'):
 
     if not isinstance(sentences, int) or sentences < 0:
         raise WrongArgumentValue("sentences argument must be a positive integer")
-    
+
     last_char_pool = '.'*4+'?!'
     length = sentences or random.randint(3, 7)
     result = []
     for x in range(length):
         result.append(sentence(ended_by=last_char_pool, language=language))
-    
+
     return ' '.join(result)
 
 
@@ -162,13 +164,13 @@ def date(year=0, month=0, day=0, hour=0, minutes=0, minyear=500):
         month = random.randint(1, 12)
 
     if not day:
-        day = random.randint(1, months_days_tuple[month-1]-1) 
+        day = random.randint(1, months_days_tuple[month-1]-1)
 
     if not hour:
-        hour = random.randint(0, 23) 
+        hour = random.randint(0, 23)
 
     if not minutes:
-        minutes = random.randint(0, 59) 
+        minutes = random.randint(0, 59)
 
     return datetime.datetime(year, month, day, hour, minutes)
 
@@ -222,7 +224,7 @@ def color(form='hex', grayscale=False):
     def gray(value, delimeter=''):
         v = text_type(value)
         return delimeter.join([v,v,v])
-    
+
     if form == 'hex':
         return '#' + gray(hex_hash(2)) if grayscale else '#' + hex_hash(6)
 
@@ -268,7 +270,7 @@ def email(dom=''):
 
     if not isinstance(dom, text_type):
         raise WrongArgumentValue("dom (domain) argument must be a string")
-    
+
     if not dom:
         dom = domain()
 
@@ -302,7 +304,7 @@ def country(language='en', short=False):
 
 
 def street(language='en', short_suffix=False):
-    
+
     if language not in dictionaries.streets_suffixes:
         raise DictionaryException("street suffixs pool for specified language  not found"
                                   " in dictionaries.py")

@@ -10,7 +10,7 @@ Also there can be a lot of other cases to use it.
 This lib written in Python, using chance.js implementation as a
 guide.
 
-##Installation
+## Installation
 As easy as:
 ```
 pip install chance
@@ -20,11 +20,11 @@ Then just:
 from chance import chance
 ```
 
-##Usage
+## Usage
 
-####Basic
+#### Basic
 =
-#####boolean
+##### boolean
 Returning boolean value
 ```
 chance.boolean() # true or false
@@ -35,7 +35,7 @@ chance.boolean(likelihood=70) # more true values
 chance.boolean(likelihood=20) # more false values
 ```
 
-#####character
+##### character
 Returning a random character (lower or uppercase) or symbol
 ```
 # random symbol or alpha
@@ -53,7 +53,7 @@ chance.character(language='ru')
 
 ```
 
-#####string
+##### string
 Returning a random string by calling chance.character(pool) length times
 ```
 # random string from symbols or alphas
@@ -69,7 +69,7 @@ chance.string(language='ru')
 ```
 
 
-#####syllable
+##### syllable
 Creating a random syllable by alternately concatenating vowel and consonant.
 By default, starts from consonant, but with vowel_first parameter turned True
 vowel will be first. 
@@ -86,7 +86,7 @@ chance.syllable(language='ru', vowel_first=True)
 
 
 
-#####word
+##### word
 Generating random word by concatenating few syllables.
 
 ```
@@ -98,7 +98,7 @@ chance.word('ru')
 
 ```
 
-#####sentence
+##### sentence
 Generating random sentence by concatenating few words.
 
 ```
@@ -112,7 +112,7 @@ chance.sentence(language='ru', ended_by='!')
 ```
 
 
-#####paragraph
+##### paragraph
 Generating paragraph by concatenating sentences.
 
 ```
@@ -125,7 +125,7 @@ chance.paragraph(language='ru', sentences=20)
 
 ```
 
-#####age
+##### age
 Actually, generating random integer, which interval is based on period parameter.
 ```
 # periods is a dict with values for random.randint(fr, to)
@@ -144,7 +144,7 @@ chance.age('adult')
 
 ```
 
-#####date
+##### date
 Returning datetime object. It's possible to choose which date value will be randomly generated
 (year, month, day, hour, minutes), by default all of them will be random. Also you can pass minimal
 year as minyear parameter.
@@ -162,7 +162,7 @@ chance.date(year=1999, month=8, day=12)
 
 ```
 
-#####birthday
+##### birthday
 This function based on chance.date function, it's calling chance.age function and
 passing returned value to chance.date as year parameter. You can specify period just like in age function.
 
@@ -175,7 +175,7 @@ chance.birthday('adult')
 
 ```
 
-#####first
+##### first
 Returning a first name, randomly selected from dictionary, located in dictionaries.py.
 You can add more names localisation there.
 ```
@@ -190,7 +190,7 @@ chance.first(language='ru', gender='m')
 
 ```
 
-#####last
+##### last
 Similar to chance.first function. Same parameters, same algorythm, just another dictionary used.
 ```
 # last name in english, male or female
@@ -204,7 +204,7 @@ chance.last(language='ru', gender='m')
 
 ```
 
-#####name
+##### name
 Just a shorthand function, for calling chance.first(<params>) + ' ' + chance.last(<params>)
 ```
 # name in english, male or female
@@ -218,7 +218,7 @@ chance.name(language='ru', gender='m')
 
 ```
 
-#####hex_hash
+##### hex_hash
 Return a random hex hash. Defahult length is 20.
 ```
 chance.hash()
@@ -226,7 +226,7 @@ chance.hash(length=25)
 ```
 
 
-#####color
+##### color
 Return a color. Available formats are hex and rgb with grayscale option. 
 ```
 chance.color() # #d722ef
@@ -236,7 +236,7 @@ chance.color(form='rgb', grayscale=True) # rgb(176, 176, 176)
 ```
 
 
-#####tld
+##### tld
 Return a random tld (Top Level Domain) from this list:
 ('com', 'org', 'edu', 'gov', 'co.uk', 'net', 'io', 'ru', 'eu',).
 No parameters supported for this function.
@@ -244,7 +244,7 @@ No parameters supported for this function.
 chance.tld() # 'org'
 ```
 
-#####domain
+##### domain
 Return a random domain name. You can specify tld.
 ```
 chance.domain() # zircoz.com
@@ -252,7 +252,7 @@ chance.domain('ru') # wippok.ru
 chance.domain(tld='eu') # vovupjib.eu
 ```
 
-#####url
+##### url
 Generating url. Domain, path and file extentions are
 optional arguments.
 ```
@@ -262,14 +262,14 @@ chance.url(dom='example.com') # example.com/wecobi/vopoga/bizizuz/livtellu
 chance.url(exts=['py', 'cpp', 'css', 'html']) # kibuv.io/nocal/tepoji/sifezril/wozbochi/nalzolip/lonlumi.css
 ```
 
-#####email
+##### email
 Return a random email with optionally specified domain name.
 ```
 chance.email() # banku@cagvil.org
 chance.email(dom='edu.com') # nigu@edu.com
 ```
 
-#####phone
+##### phone
 Phone number, which can be formatted or not (it is by default).
 Groups parameter can be used to configure numbers amount after
 phone prefix.
@@ -279,25 +279,25 @@ chance.phone(formatted=False) # '952117233862906'
 chance.phone(groups=3) # '(229) 628-707-001'
 ```
 
-#####ip
+##### ip
 Return a random ip.
 ```
 chance.ip() # 201.248.197.225
 ```
 
-#####ipv6
+##### ipv6
 Just a random ipv6.
 ```
 chance.ipv6() # 0ac7:c557:edf2:e048:00d9:615e:67f1:932b
 ```
 
-#####twitter
+##### twitter
 Random twitter handle.
 ```
 chance.twitter() # '@jewlo'
 ```
 
-#####country
+##### country
 Random real country name. By default returns full name in 
 english, but language and short optional arguments can be used.
 ```
@@ -308,7 +308,7 @@ chance.country(language='ru', short=True) # TL
 ```
 
 
-#####state
+##### state
 Random state name which depends on language option. For "en" it will be on of USA states,
 and with 'ru' Russian one. You can also specify option for short names.
 ```
@@ -320,7 +320,7 @@ chance.state(language='en', short=True) # VI
 ```
 
 
-#####city
+##### city
 Random city name with optional language parameter.
 ```
 chance.city() # Nowochel
@@ -328,7 +328,7 @@ chance.city(language='ru') # Вызящу
 ```
 
 
-#####street
+##### street
 Return a random street name. Available options are short suffix and language.
 ```
 chance.street() # Vehu Highway
@@ -338,7 +338,7 @@ chance.street(language='ru', short_suffix=True) # ул. Тосэкэг
 ```
 
 
-#####path
+##### path
 Local folder path. Exact depth can be specified or minimum and maximum of it.
 ```
 chance.path() # /judip/sebozfir/zamuthej/bozi/tutweki/wuchihu
@@ -347,7 +347,7 @@ chance.path(minimum=4, maximum=7) # /gonuhce/popag/tujubzin/modevmo/hozi
 ```
 
 
-#####filepath
+##### filepath
 Local path to file. Options are same as for path, but extentions list
 can be optionally added.
 ```
@@ -358,7 +358,7 @@ chance.filepath(extentions=['py', 'cpp']) # /jebzihis/misge/nira/cizollos/tazfet
 ```
 
 
-#####dictionary
+##### dictionary
 This function generates dictionary from values parameter.
 For example this:
 ```

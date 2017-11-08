@@ -7,7 +7,7 @@ setup(
     author='Davit Vardanyan',
     author_email='davoimail@gmail.com',
     url='https://github.com/davitv/chance',
-    download_url='http://github.com/davitv/chance/tarball/0.110',
+    download_url='https://github.com/davitv/chance/tarball/0.110',
     keywords=['random', 'generator', 'chancejs'],
     classifiers=[],
 )

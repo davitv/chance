@@ -20,8 +20,12 @@ def boolean(likelihood=50):
     if not isinstance(likelihood, int) or likelihood < 0 or likelihood > 100:
         raise WrongArgumentValue(
             "likelihood argument value provided for chance.boolean(likelihood) accepts integers from 0 to 100."
-            )
+        )
     return random.random() * 100 < likelihood
+
+
+def pickone(arr):
+    return arr[random.randint(0, len(arr) - 1)]
 
 
 def character(pool='', alpha=True, symbols=True, numbers=False, case='any', language='en'):
@@ -49,7 +53,7 @@ def character(pool='', alpha=True, symbols=True, numbers=False, case='any', lang
         if numbers:
             pool += dictionaries.numbers
 
-    return pool[random.randint(0, len(pool) - 1)]
+    return pickone(pool)
 
 
 def string(pool='', length=0, minimum=5, maximum=20, language='en'):
@@ -88,7 +92,7 @@ def syllable(length=0, minimum=2, maximum=3, vowel_first=False, language='en'):
     result = ''
 
     for x in range(0, length):
-        result += first[random.randint(0, len(first)-1)]
+        result += pickone(first)
         first, second = second, first
     return result
 
@@ -117,7 +121,7 @@ def sentence(words=0, ended_by='', language='en'):
     if not ended_by:
         ended_by = '.'
     elif len(ended_by) > 1:
-        ended_by = ended_by[random.randint(0, len(ended_by)-1)]
+        ended_by = pickone(ended_by)
     length = words or random.randint(12, 18)
     result = []
     for x in range(length):
@@ -191,7 +195,7 @@ def first(gender='', language='en'):
     if language not in dictionaries.first_names:
         raise WrongArgumentValue(language + " dictionary for first name not found in dictionaries module")
     cur_dict = dictionaries.first_names[language][gender]
-    name = cur_dict[random.randint(0, len(cur_dict)-1)]
+    name = pickone(cur_dict)
     return name
 
 
@@ -206,7 +210,7 @@ def last(gender='', language='en'):
     if language not in dictionaries.last_names:
         raise WrongArgumentValue(language + " dictionary for first name not found in dictionaries module")
     cur_dict = dictionaries.last_names[language][gender]
-    name = cur_dict[random.randint(0, len(cur_dict)-1)]
+    name = pickone(cur_dict)
     return name
 
 
@@ -242,7 +246,7 @@ def tld():
     :return: str
     """
     tlds = ('com', 'org', 'edu', 'gov', 'co.uk', 'net', 'io', 'ru', 'eu',)
-    return tlds[random.randint(0, len(tlds)-1)]
+    return pickone(tlds)
 
 
 def domain(t=''):
@@ -262,7 +266,7 @@ def url(dom='', p='', exts=''):
 
     dom = dom or domain()
     p = p or path()
-    extention = '.' + exts[random.randint(0, len(exts)-1)] if exts else ''
+    extention = '.' + pickone(exts) if exts else ''
     return dom + p + extention
 
 
@@ -299,8 +303,7 @@ def country(language='en', short=False):
         kind = 'code'
     else:
         kind = 'name'
-    rand = random.randint(0, len(countries)-1)
-    return countries[rand][kind]
+    return pickone(countries)[kind]
 
 
 def street(language='en', short_suffix=False):
@@ -329,8 +332,7 @@ def state(language='en', short=False):
         kind = 'abbreviation'
     else:
         kind = 'name'
-    rand = random.randint(0, len(states)-1)
-    return states[rand][kind]
+    return pickone(states)[kind]
 
 
 def city(language='en'):
@@ -369,9 +371,10 @@ def path(depth=0, minimum=4, maximum=6):
 def filepath(extentions=None, depth=0, minimum=4, maximum=6):
     extentions = extentions or dictionaries.extentions
     result = path(depth, minimum, maximum)
-    extention = extentions[random.randint(0, len(extentions)-1)]
+    extention = pickone(extentions)
     result += '/' + word() + '.' + extention
     return result
+
 
 functions_map = {
     'boolean': boolean,

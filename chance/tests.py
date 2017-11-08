@@ -27,7 +27,7 @@ class TestChanceBooleanFunction(unittest.TestCase):
             else:
                 false_values += 1
         res = float(true_values) / false_values
-        
+
         self.assertTrue(res > (likelihood - infelicity))
 
     def test_likelihood_80_approximately_result(self):
@@ -42,7 +42,7 @@ class TestChanceBooleanFunction(unittest.TestCase):
             else:
                 false_values += 1
         res = float(true_values) / false_values
-        
+
         self.assertTrue(res > (likelihood - infelicity))
 
     def test_likelihood_10_approximately_result(self):
@@ -57,7 +57,7 @@ class TestChanceBooleanFunction(unittest.TestCase):
             else:
                 false_values += 1
         res = float(true_values) / false_values
-        
+
         self.assertTrue(res > (likelihood - infelicity))
 
     def test_boolean_raise_wrong_argument_exception(self):
@@ -67,7 +67,7 @@ class TestChanceBooleanFunction(unittest.TestCase):
 
 
 class TestChanceCharacterFunction(unittest.TestCase):
-    
+
     def test_character_returns_character(self):
         chars = 'abcdefghijklmnopqrstuvwxyz!@#$%^&*()[]'
         chars += chars.upper()
@@ -183,7 +183,7 @@ class TestChanceCharacterFunction(unittest.TestCase):
 
 
 class TestStringFunction(unittest.TestCase):
-    
+
     def test_string_returns_string(self):
         for x in range(100):
             self.assertTrue(isinstance(chance.string(), text_type))
@@ -191,12 +191,12 @@ class TestStringFunction(unittest.TestCase):
     def test_string_returns_string_with_correct_length(self):
         for x in range(1, 100):
             self.assertTrue(len(chance.string(length=x)) == x)
-       
+
     def test_string_returns_string_with_correct_min_max(self):
         for x in range(1, 100):
             l = len(chance.string(minimum=x, maximum=x+5))
             self.assertTrue(x <= l <= (x+5))
-        
+
     def test_string_returns_string_from_correct_pool(self):
         pools = (
             'abcdef',
@@ -216,7 +216,7 @@ class TestStringFunction(unittest.TestCase):
         self.assertRaises(chance_exceptions.WrongArgumentValue, chance.string, 1)
         self.assertRaises(chance_exceptions.WrongArgumentValue, chance.string, .1)
         self.assertRaises(chance_exceptions.DictionaryException, chance.string, **{'language': 'dfsdf'})
-    
+
 
 class TestSyllableFunction(unittest.TestCase):
     def test_syllable_returns_correct_string(self):
@@ -234,19 +234,19 @@ class TestSyllableFunction(unittest.TestCase):
                 nxt, prv = prv, nxt
 
     def test_syllable_returns_correct_starting_string(self):
-        
+
         for x in range(20):
             syll = chance.syllable(x+1, vowel_first=True)
             n = syll[0]
             self.assertFalse(dictionaries.vowels['en'].find(n) == -1)
             nxt = dictionaries.consonants['en']
-            prv = dictionaries.vowels['en'] 
+            prv = dictionaries.vowels['en']
             for i, ch in enumerate(syll):
                 if i == 0 or i == (len(syll)-1):
                     continue
                 self.assertFalse(nxt.find(ch) == -1)
                 nxt, prv = prv, nxt
-        
+
         for x in range(20):
             syll = chance.syllable(x+1, vowel_first=False)
             n = syll[0]
@@ -284,7 +284,7 @@ class TestWordFunction(unittest.TestCase):
 
 
 class TestSentenceFunction(unittest.TestCase):
-    
+
     def test_sentence_returns_correct_value(self):
         for x in range(20):
             self.assertTrue(isinstance(chance.sentence(), text_type))
@@ -292,7 +292,7 @@ class TestSentenceFunction(unittest.TestCase):
             self.assertTrue(45 <= length <= 324)
         for x in range(50):
             self.assertEqual(text_type, type(chance.sentence(x+1)))
-            
+
     def test_sentence_returns_correct_endings(self):
         end_pool = '?!.:'
         for x in end_pool:
@@ -430,18 +430,18 @@ class TestNameFunction(unittest.TestCase):
 
 
 class TestHashFunction(unittest.TestCase):
-    
+
     def test_hash_returns_correct_value(self):
         for x in range(20):
             self.assertEquals(int, type(hash(chance.hex_hash())))
 
 
 class TestColorFunction(unittest.TestCase):
-    
+
     def test_color_returns_correct_value(self):
         hex_color_pattern = re.compile('^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$')
         rgb_color_pattern = re.compile('rgb\((\d{1,3}), (\d{1,3}), (\d{1,3})\)')
-        
+
         for x in range(20):
             hex_color = chance.color(form='hex')
             rgb_color = chance.color(form='rgb')
@@ -461,16 +461,16 @@ class TestColorFunction(unittest.TestCase):
         self.assertRaises(chance_exceptions.WrongArgumentValue, chance.color, 'in')
         self.assertRaises(chance_exceptions.WrongArgumentValue, chance.color, 'my')
         self.assertRaises(chance_exceptions.WrongArgumentValue, chance.color, 'room')
-   
+
 
 class TestDomainFunction(unittest.TestCase):
-    
+
     def test_domain_returns_correct_value(self):
         domain_pattern = re.compile('^([A-Za-z0-9]+\.[a-z\.]{2,5})$')
-       
+
         for x in range(20):
             self.assertTrue(domain_pattern.match(chance.domain()) is not None)
-         
+
     def test_domain_raises_exception(self):
         self.assertRaises(chance_exceptions.WrongArgumentValue, chance.domain, 2)
         self.assertRaises(chance_exceptions.WrongArgumentValue, chance.domain, 1)
@@ -519,7 +519,7 @@ class TestStreetFunction(unittest.TestCase):
     def test_street_returns_string_type(self):
         for x in range(10):
             self.assertEquals(type(chance.street()), text_type)
-    
+
     def test_street_returns_unicode(self):
         for x in range(10):
             self.assertEquals(type(chance.street(language='ru')), text_type)
@@ -596,7 +596,7 @@ class TestDictionaryFunction(unittest.TestCase):
 
 
 class TestUnixPathFunction(unittest.TestCase):
-    
+
     def test_correct_value(self):
         path = chance.path()
         for x in range(4):
@@ -610,10 +610,10 @@ class TestUnixPathFunction(unittest.TestCase):
 
         for x in range(4):
             self.assertTrue(5 <= len(chance.path().split('/')) <= 7)
-           
+
 
 class TestUnixFilePathFunction(unittest.TestCase):
-    
+
     def test_correct_value_type(self):
         path = chance.filepath()
         for x in range(4):
@@ -625,7 +625,7 @@ class TestUnixFilePathFunction(unittest.TestCase):
             pieces = fpath.split('/')
             self.assertTrue(6 <= len(pieces) <= 8, (len(pieces), pieces,))
             self.assertTrue(pieces[-1:][0].find('.') > 0)
-            
+
     def test_unix_filepath_returns_correct_extention(self):
         exts = ['hhj']
         for x in range(20):
@@ -635,7 +635,7 @@ class TestUnixFilePathFunction(unittest.TestCase):
             self.assertTrue(pieces[-1:][0].find('.') > 0)
             ext = pieces[-1:][0].split('.')[1]
             self.assertTrue(any(ext == x for x in exts))
-        
+
         exts = ['txt', 'emuy']
         for x in range(20):
             fpath = chance.filepath(extentions=exts)
@@ -653,6 +653,14 @@ class TestUnixFilePathFunction(unittest.TestCase):
             self.assertTrue(pieces[-1:][0].find('.') > 0)
             ext = pieces[-1:][0].split('.')[1]
             self.assertTrue(any(ext == x for x in exts))
+
+
+class TestPickoneFunction(unittest.TestCase):
+    def test_correct_value(self):
+        arr = ['zero', 'one', 'two', 'three', 'four', 'five']
+        for x in range(20):
+            el = chance.pickone(arr)
+            self.assertTrue(el in arr)
 
 
 if __name__ == '__main__':

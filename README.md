@@ -35,11 +35,22 @@ chance.boolean(likelihood=70) # more true values
 chance.boolean(likelihood=20) # more false values
 ```
 
+##### pickone
+Returning a random element from list.
+```
+# random word
+
+lst = ['one', 'two', 'three', 'four']
+
+chance.pickone(lst)
+
+```
+
 ##### character
 Returning a random character (lower or uppercase) or symbol
 ```
 # random symbol or alpha
-chance.character(pool='', alpha=True, symbols=True, numbers=False, case='any') 
+chance.character(pool='', alpha=True, symbols=True, numbers=False, case='any')
 
 # random symbol only
 chance.character(pool='', alpha=False, symbols=True, numbers=False, case='any')
@@ -48,7 +59,7 @@ chance.character(pool='', alpha=False, symbols=True, numbers=False, case='any')
 chance.character(pool='12!') # 1 or 2 or !
 
 # random symbol from russian language characters pool from dictionaries.py
-chance.character(language='ru') 
+chance.character(language='ru')
 
 
 ```
@@ -72,7 +83,7 @@ chance.string(language='ru')
 ##### syllable
 Creating a random syllable by alternately concatenating vowel and consonant.
 By default, starts from consonant, but with vowel_first parameter turned True
-vowel will be first. 
+vowel will be first.
 ```
 # random syllable with consonant first
 chance.syllable(language='en', length=0, minimum=2, maximum=3, vowel_first=False)
@@ -227,7 +238,7 @@ chance.hash(length=25)
 
 
 ##### color
-Return a color. Available formats are hex and rgb with grayscale option. 
+Return a color. Available formats are hex and rgb with grayscale option.
 ```
 chance.color() # #d722ef
 chance.color(form='rgb') # rgb(168, 187, 156)
@@ -298,7 +309,7 @@ chance.twitter() # '@jewlo'
 ```
 
 ##### country
-Random real country name. By default returns full name in 
+Random real country name. By default returns full name in
 english, but language and short optional arguments can be used.
 ```
 chance.country() # Australia

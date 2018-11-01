@@ -232,8 +232,8 @@ chance.name(language='ru', gender='m')
 ##### hex_hash
 Return a random hex hash. Defahult length is 20.
 ```
-chance.hash()
-chance.hash(length=25)
+chance.hex_hash()
+chance.hex_hash(length=25)
 ```
 
 
